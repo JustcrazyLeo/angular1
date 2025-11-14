@@ -82,3 +82,46 @@ for (let i=1;i<=n;i++){
     fac*=i;
 }
 console.log(fac);
+
+//Практика Функции
+//1
+function add(a:number,b:number):number{
+    return a + b;
+}
+console.log(add(-2, 1));
+console.log(add(264, 35));
+console.log(add(3, -2));
+
+//2
+function greet(name: string = "Имя") {
+    console.log("привет, " + name + "!");
+}
+greet("мужчины");
+
+//3
+function isEven(num:number):boolean{
+    return num%2===0;
+}
+console.log(isEven(23));
+console.log(isEven(56));
+
+//4
+function sq(num:number):number{
+    return num*num;
+}
+console.log(sq(34));
+console.log(sq(7));
+
+//5
+function sravn(a: number, b: number): string {
+    if (a > b) {
+        return "первое число больше";
+    }
+    if (b > a) {
+        return "второе число больше";
+    }
+    return "равны";
+}
+console.log(sravn(123, 167));
+console.log(sravn(6, 99));
+console.log(sravn(12, 35));
