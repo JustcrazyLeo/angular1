@@ -125,3 +125,15 @@ function sravn(a: number, b: number): string {
 console.log(sravn(123, 167));
 console.log(sravn(6, 99));
 console.log(sravn(12, 35));
+
+//
+let Age:number=21; 
+if (Age<18){
+    console.log('возраст не подходит!');
+}
+if (Age>=18){
+    console.log('вы нужного возраста!');
+    for (let a=1;a<=10;a++){
+        console.log(Age+' x '+a,'= '+Age*a);
+    }
+}

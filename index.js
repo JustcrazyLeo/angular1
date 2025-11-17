@@ -122,3 +122,15 @@ function sravn(a, b) {
 console.log(sravn(123, 167));
 console.log(sravn(6, 99));
 console.log(sravn(12, 35));
+
+//
+var Age = 21;
+if (Age < 18) {
+    console.log('возраст не подходит!');
+}
+if (Age >= 18) {
+    console.log('вы нужного возраста!');
+    for (var a = 1; a <= 10; a++) {
+        console.log(Age + ' x ' + a, '= ' + Age * a);
+    }
+}
