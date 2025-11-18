@@ -134,3 +134,24 @@ if (Age >= 18) {
         console.log(Age + ' x ' + a, '= ' + Age * a);
     }
 }
+//
+function aaa(i, x, c) {
+    if (c === '+') {return i + x;}
+
+    if (c === '-') {return i - x;}
+
+    if (c === '*') {return i * x;}
+
+    if (c === '/') {return i / x;}
+
+    return 0;
+}
+
+console.log('2 + 4 = ', aaa(12, 21, '+'));
+
+console.log('2 - 4 = ', aaa(3, 23, '-'));
+
+console.log('2 × 4 = ', aaa(4, 11, '*'));
+
+console.log('2 ÷ 4 = ', aaa(45, 23, '/'));
+//
