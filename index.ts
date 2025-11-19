@@ -158,3 +158,96 @@ console.log('2 × 4 = ', aaa(4, 11, '*'));
 
 console.log('2 ÷ 4 = ', aaa(45, 23, '/'));
 //
+//1
+const students: string[] = ['alex', 'maria', 'oleg'];
+const scores: number[] = [85, 92, 78];
+const statuses: boolean[] = [true, false, true];
+
+//2
+const colors: string[] = ['красный', 'зеленый', 'синий'];
+console.log(colors[0]);
+console.log(colors[2]);
+
+//3
+const car = {
+    brand: 'томасс',
+    model: 'X5',
+    year: 2018
+};
+console.log('Автомобиль:', car);
+console.log('Марка:', car.brand);
+console.log('Модель:', car.model);
+console.log('Год:', car.year);
+
+//4
+type Person = {
+    name: string;
+    age: number;
+}
+const person: Person = {
+    name: 'софия',
+    age: 24
+}
+console.log(person);
+
+//5
+interface Teacher {
+    name: string;
+    age: number;
+}
+const teachers: Teacher[] = [
+    { name: 'андрей', age: 45 },
+    { name: 'татьяна', age: 38 },
+    { name: 'сергей', age: 51 },
+];
+for (let i = 0; i < teachers.length; i++) {
+    console.log('Имя: ' + teachers[i].name + ', Возраст: ' + teachers[i].age);
+}
+
+//6
+const primes = [2, 3, 5];
+primes.push(7);
+console.log(primes);
+
+//7
+const amounts = [10, 20, 30, 40];
+const increased = amounts.map((amount) => amount * 2);
+console.log(increased);
+
+//8
+const participantAges = [16, 21, 17, 19, 15];
+const eligible = participantAges.filter((age) => age >= 18);
+console.log(eligible);
+
+//9
+interface Product {
+    name: string;
+    price: number;
+}
+const products: Product[] = [
+    { name: 'телефон', price: 25000 },
+    { name: 'ноутбук', price: 50000 },
+    { name: 'планшет', price: 15000 },
+];
+const productName = 'ноутбук';
+const product = products.find((p) => p.name === productName);
+if (product) {
+    console.log('Найден: ' + product.name + ', цена: ' + product.price + ' руб');
+}
+if (!product) {
+    console.log('Товар не найден');
+}
+
+//10
+const randomNumbers = [7, -2, 14, 0, -5, 9];
+const processed = randomNumbers.filter((num) => num > 0).map((num) => num * 4);
+console.log(processed);
+
+//11
+const toSort = [33, 5, 17, 2];
+const defaultSorted = [...toSort].sort();
+console.log('По умолчанию:', defaultSorted);
+const ascSorted = [...toSort].sort((a, b) => a - b);
+console.log('Возрастание:', ascSorted);
+const descSorted = [...toSort].sort((a, b) => b - a);
+console.log('Убывание:', descSorted);
