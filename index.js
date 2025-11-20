@@ -236,3 +236,34 @@ const ascSorted = [...toSort].sort((a, b) => a - b);
 console.log('Возрастание:', ascSorted);
 const descSorted = [...toSort].sort((a, b) => b - a);
 console.log('Убывание:', descSorted);
+//
+
+//2
+const items = [
+    { name: 'Смартфон', price: 25000, inStock: true },
+    { name: 'Планшет', price: 35000, inStock: true },
+    { name: 'Умные часы', price: 8000, inStock: false },
+    { name: 'Ноутбук', price: 65000, inStock: true },
+    { name: 'Беспроводные наушники', price: 6000, inStock: true }
+];
+
+const stockItems = items.filter(product => product.inStock === true);
+console.log('В наличии следующие товары:');
+stockItems.forEach(product => {
+    console.log(`• ${product.name} - ${product.price}₽`);
+});
+
+const costArray = stockItems.map(product => product.price);
+console.log('Цены: ' + costArray.join('; '));
+
+let result = 0;
+for (let index = 0; index < stockItems.length; index++) {
+    result = result + stockItems[index].price;
+}
+console.log('Суммарная стоимость: ' + result + '₽');
+
+const orderedItems = [...stockItems].sort((item1, item2) => item1.price - item2.price);
+console.log('По возрастанию цены:');
+orderedItems.forEach(item => {
+    console.log(`• ${item.name} - ${item.price}₽`);
+});
