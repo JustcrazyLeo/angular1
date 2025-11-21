@@ -288,3 +288,103 @@ console.log('По возрастанию цены:');
 orderedItems.forEach(item => {
     console.log(`• ${item.name} - ${item.price}₽`);
 });
+//
+
+//
+interface ArticleData {
+    userId: number;
+    id: number;
+    title: string;
+    content: string;
+}
+interface MemberData {
+    id: number;
+    name: string;
+    username: string;
+    email: string;
+}
+
+async function retrieveArticles(): Promise<ArticleData[]> {
+    try {
+        const request = await fetch('https://jsonplaceholder.typicode.com/posts');
+        if (request.status !== 200) {
+            throw new Error(`Сервер вернул статус: ${request.status}`);
+        }
+        const articles: ArticleData[] = await request.json();
+        return articles;
+    } catch (error) {
+        console.error('Проблема с загрузкой статей:', error);
+        return [];
+    }
+}
+
+async function fetchArticle(articleId: number): Promise<ArticleData | undefined> {
+    try {
+        const request = await fetch(`https://jsonplaceholder.typicode.com/posts/${articleId}`);
+        if (request.status !== 200) {
+            throw new Error(`Сервер вернул статус: ${request.status}`);
+        }
+        const article: ArticleData = await request.json();
+        return article;
+    } catch (error) {
+        console.error('Не удалось получить статью:', error);
+        return undefined;
+    }
+}
+
+async function retrieveMembers(): Promise<MemberData[]> {
+    try {
+        const request = await fetch('https://jsonplaceholder.typicode.com/users');
+        if (request.status !== 200) {
+            throw new Error(`Сервер вернул статус: ${request.status}`);
+        }
+        const members: MemberData[] = await request.json();
+        return members;
+    } catch (error) {
+        console.error('Ошибка загрузки участников:', error);
+        return [];
+    }
+}
+
+async function startApplication() {
+    console.log('=== ЗАГРУЗКА СТАТЕЙ ===');
+    const articlesCollection = await retrieveArticles();
+    if (articlesCollection.length > 0) {
+        const mainArticle = articlesCollection[0];
+        console.log('Основная статья:');
+        console.log('Номер:', mainArticle.id);
+        console.log('Заголовок:', mainArticle.title);
+        console.log('Содержимое:', mainArticle.content);
+        console.log('---');
+    }
+    console.log('=== ПОИСК СТАТЬИ ПО НОМЕРУ ===');
+    const numberedArticle = await fetchArticle(1);
+    if (numberedArticle) {
+        console.log('Статья №1:', numberedArticle.title);
+    }
+    console.log('---');
+    console.log('=== УЧАСТНИКИ С РАСШИРЕННЫМИ ИМЕНАМИ ===');
+    const membersList = await retrieveMembers();
+    const selectedMembers = membersList.filter(member => member.name.length > 10);
+    selectedMembers.forEach(member => {
+        console.log('Участник:', member.name);
+    });
+    console.log('---');
+    console.log('=== КОЛЛЕКЦИЯ ТЕКСТОВ СТАТЕЙ ===');
+    const allArticles = await retrieveArticles();
+    const textsCollection = allArticles.map(article => article.content);
+    console.log('Все тексты:', textsCollection);
+    console.log('---');
+    console.log('=== ПОИСК СТАТЬИ ПО ЗАГОЛОВКУ ===');
+    const targetArticle = allArticles.find(article => article.title === "qui est esse");
+    if (targetArticle) {
+        console.log('Обнаружена статья:');
+        console.log('Идентификатор:', targetArticle.id);
+        console.log('Название:', targetArticle.title);
+        console.log('Контент:', targetArticle.content);
+    } else {
+        console.log('Статья отсутствует в коллекции');
+    }
+}
+startApplication();
+//

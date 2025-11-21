@@ -267,3 +267,90 @@ console.log('По возрастанию цены:');
 orderedItems.forEach(item => {
     console.log(`• ${item.name} - ${item.price}₽`);
 });
+//
+
+//
+async function loadContent() {
+    try {
+        const apiCall = await fetch('https://jsonplaceholder.typicode.com/posts');
+        if (apiCall.status !== 200) {
+            throw new Error(`Ошибка: ${apiCall.status}`);
+        }
+        const content = await apiCall.json();
+        return content;
+    } catch (err) {
+        console.error('Сбой загрузки материалов:', err);
+        return [];
+    }
+}
+
+async function getContentItem(itemId) {
+    try {
+        const apiCall = await fetch(`https://jsonplaceholder.typicode.com/posts/${itemId}`);
+        if (apiCall.status !== 200) {
+            throw new Error(`Ошибка: ${apiCall.status}`);
+        }
+        const item = await apiCall.json();
+        return item;
+    } catch (err) {
+        console.error('Ошибка получения материала:', err);
+        return null;
+    }
+}
+
+async function loadPeople() {
+    try {
+        const apiCall = await fetch('https://jsonplaceholder.typicode.com/users');
+        if (apiCall.status !== 200) {
+            throw new Error(`Ошибка: ${apiCall.status}`);
+        }
+        const people = await apiCall.json();
+        return people;
+    } catch (err) {
+        console.error('Сбой загрузки людей:', err);
+        return [];
+    }
+}
+
+async function workflow() {
+    console.log('>>> МАТЕРИАЛЫ');
+    const contentItems = await loadContent();
+    if (contentItems.length > 0) {
+        const primaryItem = contentItems[0];
+        console.log('Первый материал:');
+        console.log('ИД:', primaryItem.id);
+        console.log('Заголовок:', primaryItem.title);
+        console.log('Материал:', primaryItem.body);
+        console.log('---');
+    }
+    console.log('>>> МАТЕРИАЛ ПО ИДЕНТИФИКАТОРУ');
+    const specificItem = await getContentItem(1);
+    if (specificItem) {
+        console.log('Материал 1:', specificItem.title);
+    }
+    console.log('---');
+    console.log('>>> ЛЮДИ С ДЛИННЫМИ ИМЕНАМИ');
+    const peopleList = await loadPeople();
+    const filteredPeople = peopleList.filter(person => person.name.length > 10);
+    filteredPeople.forEach(person => {
+        console.log('Человек:', person.name);
+    });
+    console.log('---');
+    console.log('>>> ТЕКСТЫ МАТЕРИАЛОВ');
+    const allContent = await loadContent();
+    const contentTexts = allContent.map(item => item.body);
+    console.log('Тексты материалов:', contentTexts);
+    console.log('---');
+    console.log('>>> ПОИСК МАТЕРИАЛА');
+    const searchedItem = allContent.find(item => item.title === "qui est esse");
+    if (searchedItem) {
+        console.log('Найденный материал:');
+        console.log('ИД:', searchedItem.id);
+        console.log('Заголовок:', searchedItem.title);
+        console.log('Содержание:', searchedItem.body);
+    } else {
+        console.log('Материал не обнаружен');
+    }
+}
+workflow();
+//
