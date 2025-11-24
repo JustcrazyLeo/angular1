@@ -388,3 +388,48 @@ async function startApplication() {
 }
 startApplication();
 //
+
+//
+type PublicationRecord = {
+    creatorId: number;
+    recordId: number;
+    headline: string;
+    textContent: string;
+};
+
+async function retrievePublicationData(): Promise<PublicationRecord[]> {
+    try {
+        const dataResponse = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const publicationData: PublicationRecord[] = await dataResponse.json();
+        return publicationData;
+    } catch (exception) {
+        console.error('Data retrieval failed:', exception);
+        return [];
+    }
+}
+
+async function processData() {
+    const publicationCollection = await retrievePublicationData();
+
+    const creatorIdentifiers = publicationCollection.map(item => item.creatorId);
+    
+    console.log('Creator IDs extracted from publications:');
+    console.log(creatorIdentifiers);
+    const uniqueCreators = Array.from(new Set(creatorIdentifiers));
+    console.log('Unique creator identifiers:');
+    uniqueCreators.forEach(creator => {
+        console.log(`Creator #${creator}`);
+    });
+
+    console.log('Publication count per creator:');
+    uniqueCreators.forEach(creator => {
+        const count = creatorIdentifiers.filter(id => id === creator).length;
+        console.log(`Creator ${creator}: ${count} publications`);
+    });
+    console.log('Detailed creator-publication mapping:');
+    creatorIdentifiers.forEach((creatorId, index) => {
+        console.log(`Publication ${index + 1} → Creator ${creatorId}`);
+    });
+}
+processData();
+//

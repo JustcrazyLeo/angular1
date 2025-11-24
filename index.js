@@ -354,3 +354,43 @@ async function workflow() {
 }
 workflow();
 //
+
+//
+async function obtainContentItems() {
+    try {
+        const networkResponse = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const contentItems = await networkResponse.json();
+        return contentItems;
+    } catch (networkError) {
+        console.error('Network request failed:', networkError);
+        return [];
+    }
+}
+
+async function analyzeContent() {
+    const contentCollection = await obtainContentItems();
+
+    const userIdentifiers = contentCollection.map(content => content.userId);
+    
+    console.log('Complete list of user IDs:');
+    userIdentifiers.forEach((userId, idx) => {
+        process.stdout.write(`${userId}${idx < userIdentifiers.length - 1 ? ', ' : ''}`);
+    });
+    const distinctUsers = [...new Set(userIdentifiers)].sort();
+    console.log('Distinct users who created content:');
+    distinctUsers.forEach(user => {
+        console.log(`👤 User ${user}`);
+    });
+    console.log('Content distribution analysis:');
+    distinctUsers.forEach(user => {
+        const userContentCount = userIdentifiers.filter(id => id === user).length;
+        const percentage = ((userContentCount / userIdentifiers.length) * 100).toFixed(1);
+        console.log(`User ${user}: ${userContentCount} items (${percentage}%)`);
+    });
+    console.log(`Summary Report:
+    Total content items: ${contentCollection.length}
+    Active users: ${distinctUsers.length}
+    Average items per user: ${(contentCollection.length / distinctUsers.length).toFixed(1)}`);
+}
+analyzeContent();
+//
